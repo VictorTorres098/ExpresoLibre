@@ -13,6 +13,7 @@ public class Flete extends Trasporte{
 	private Viaje viaje;
 	private ArrayList <Paquete> depositoFlete;
 	private boolean disponible;
+	private String tipo = "Flete";
 	
 	public Flete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante) {		//falta variables en el contructor
 		this.matricula = matricula;
@@ -39,8 +40,7 @@ public class Flete extends Trasporte{
 
 	@Override
 	public int obtenerVolumen() {
-		// TODO Auto-generated method stub
-		return 0;
+		return depositoFlete.size();
 	}
 
 	@Override
@@ -105,6 +105,30 @@ public class Flete extends Trasporte{
 	@Override
 	public boolean remolqueCargado() {
 		return depositoFlete.size() > 0;
+	}
+	@Override
+	public boolean equals(Object trasporte) {
+		boolean resultado = false;
+		if(trasporte instanceof Flete) {
+			Flete f = (Flete) trasporte;
+			resultado = (this.dameTipo().equals(f.dameTipo()) && this.destinoActual().equals(f.destinoActual()) && this.obtenerVolumen() == f.obtenerVolumen());
+		}
+		return resultado;
+	}
+
+	@Override
+	public String dameTipo() {
+		return this.tipo;
+	}
+
+	@Override
+	public String destinoActual() {
+		return this.viaje.consultarDestino();
+	}
+
+	@Override
+	public String matricula() {
+		return this.matricula;
 	}
 
 

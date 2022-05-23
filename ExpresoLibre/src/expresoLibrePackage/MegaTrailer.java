@@ -14,6 +14,7 @@ public class MegaTrailer extends Trasporte {
 	private Viaje viaje;
 	private ArrayList<Paquete> despositoMegaTrailer;
 	private boolean disponible;
+	private String tipo = "MegaTrailer";
 	
 	public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) { //faltan variables
 		this.matricula = matricula;
@@ -42,8 +43,7 @@ public class MegaTrailer extends Trasporte {
 
 	@Override
 	public int obtenerVolumen() {
-		// TODO Auto-generated method stub
-		return 0;
+		return despositoMegaTrailer.size();
 	}
 
 	@Override
@@ -109,6 +109,30 @@ public class MegaTrailer extends Trasporte {
 	@Override
 	public boolean remolqueCargado() {
 		return despositoMegaTrailer.size() > 0;
+	}
+	@Override
+	public boolean equals(Object trasporte) {
+		boolean resultado = false;
+		if(trasporte instanceof MegaTrailer) {
+			MegaTrailer m = (MegaTrailer) trasporte;
+			resultado = (this.dameTipo().equals(m.dameTipo()) && this.destinoActual().equals(m.destinoActual()) && this.obtenerVolumen() == m.obtenerVolumen());
+		}
+		return resultado;
+	}
+
+	@Override
+	public String dameTipo() {
+		return this.tipo;
+	}
+
+	@Override
+	public String destinoActual() {
+		return this.viaje.consultarDestino();
+	}
+
+	@Override
+	public String matricula() {
+		return this.matricula;
 	}
 
 

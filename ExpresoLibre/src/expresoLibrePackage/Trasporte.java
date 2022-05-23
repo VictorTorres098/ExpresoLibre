@@ -36,7 +36,14 @@ public abstract class Trasporte {
 	//tiene paquetes cargados 
 	public abstract boolean remolqueCargado();
 	
-	//cambiar estado no disponible
+	//return tipo trasporte
+	public abstract String dameTipo();
+	
+	//devuelve el destino del trasporte 
+	public abstract String destinoActual();
+	
+	//devuelve la matricula
+	public abstract String matricula();
 
 
 

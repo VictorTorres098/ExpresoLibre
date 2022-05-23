@@ -13,6 +13,7 @@ public class Trailer extends Trasporte {
 	private Viaje viaje;
 	private ArrayList<Paquete> depositoTrailer;
 	private boolean disponible;
+	private String tipo = "Trailer";
 	
 	public Trailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKM, double segCarga) { //faltan las variables
 		this.matricula = matricula;
@@ -108,6 +109,30 @@ public class Trailer extends Trasporte {
 	@Override
 	public boolean remolqueCargado() {
 		return depositoTrailer.size() > 0; 
+	}
+	@Override
+	public boolean equals(Object trasporte) {
+		boolean resultado = false;
+		if(trasporte instanceof Trailer) {
+			Trailer t = (Trailer) trasporte;
+			resultado = (this.dameTipo().equals(t.dameTipo()) && this.destinoActual().equals(t.destinoActual()) && this.obtenerVolumen() == t.obtenerVolumen());
+		}
+		return resultado;	
+	}
+
+	@Override
+	public String dameTipo() {
+		return this.tipo;
+	}
+
+	@Override
+	public String destinoActual() {
+		return this.viaje.consultarDestino();
+	}
+
+	@Override
+	public String matricula() {
+		return this.matricula;
 	}
 
 }

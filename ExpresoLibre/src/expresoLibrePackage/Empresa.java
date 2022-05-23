@@ -3,6 +3,7 @@ package expresoLibrePackage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class Empresa {
 	private String cuit;
@@ -148,10 +149,16 @@ public class Empresa {
 	public double obtenerCostoViaje(String matricula) {
 		return 0;
 	}
-	// Busca si hay algún transporte igual en tipo, destino y carga.
+	// Busca si hay algún transporte igual en tipo, destino y carga. //seria la misma cantidad de carga? //se tiene que devolver la matricula
 	// En caso de que no se encuentre ninguno, se debe devolver null.
 	public String obtenerTransporteIgual(String matricula) {
-		return "vacio";
+		String coicidencia = null;
+		for(String key : flotaTrasportes.keySet()) {
+			if(flotaTrasportes.get(matricula).equals(flotaTrasportes.get(key))) {
+				coicidencia = flotaTrasportes.get(key).matricula();
+			}
+		}
+		return coicidencia;
 	}
 	
 	//Fin de Interface obligatoria los metodos que se agregen a continuacion son propios
