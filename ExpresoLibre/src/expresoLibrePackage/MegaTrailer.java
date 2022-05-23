@@ -12,7 +12,7 @@ public class MegaTrailer extends Trasporte {
 	private double costoFijo;
 	private double costoComida;
 	private Viaje viaje;
-	private ArrayList<Paquete> despositoTrasporte;
+	private ArrayList<Paquete> despositoMegaTrailer;
 	private boolean disponible;
 	
 	public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) { //faltan variables
@@ -24,7 +24,7 @@ public class MegaTrailer extends Trasporte {
 		this.segCarga = segCarga;
 		this.costoFijo = costoFijo;
 		this.costoComida = costoComida;
-		despositoTrasporte = new ArrayList<Paquete>();
+		despositoMegaTrailer = new ArrayList<Paquete>();
 		disponible = true;
 	}
 
@@ -54,22 +54,13 @@ public class MegaTrailer extends Trasporte {
 
 	@Override
 	public boolean consultarDisponibilidad() {
-		// TODO Auto-generated method stub
-		return false;
+		return disponible;
 	}
 
 	@Override
 	public int costoPorKM() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-
-
-	@Override
-	public void agregarPaquetes(Paquete paquete) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -98,5 +89,17 @@ public class MegaTrailer extends Trasporte {
 	public boolean exiteDestino() {
 		return viaje!=null;
 	}
+
+	@Override
+	public boolean espacioRemolqueDisponible() {
+		return(cargaMax > 0 && capacidad > 0);
+	}
+
+	@Override
+	public void agregarPaquetes(Paquete paquete) {
+		despositoMegaTrailer.add(paquete);
+	}
+
+
 
 }

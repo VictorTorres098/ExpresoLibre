@@ -2,6 +2,7 @@ package expresoLibrePackage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Empresa {
 	private String cuit;
@@ -84,7 +85,38 @@ public class Empresa {
 	// Devuelve un double con el volumen de los paquetes subidos
 	// al transporte.
 	public double cargarTransporte(String matricula) {
-		return 0;
+		
+		double volumenTotal = 0;
+		//se podria crear un contador para para cada deposito y evitar errores
+		
+		//para los depositos refrigerados
+		
+		if(flotaTrasportes.get(matricula).consultarDisponibilidad() && flotaTrasportes.get(matricula).exiteDestino() && flotaTrasportes.get(matricula).tieneRefrigeracion()) {
+			Iterator it = depositoRefrigerado.iterator();
+			while(it.hasNext() && flotaTrasportes.get(matricula).espacioRemolqueDisponible()) {
+				Paquete p = (Paquete) it.next(); 					//necesito castearlo para acceder a los metodos
+				flotaTrasportes.get(matricula).agregarPaquetes(p);  //agrego la "remolque"
+				volumenTotal += p.obtenerVolumen(); 				//sumo cada volumen del cada paquete
+				it.remove(); 										//remove??? lo tiene que remover
+			}
+		}
+		
+		//para los que no necesitan refrigeracion (deposito comun)
+		
+		if(flotaTrasportes.get(matricula).consultarDisponibilidad() && flotaTrasportes.get(matricula).exiteDestino() && !flotaTrasportes.get(matricula).tieneRefrigeracion()) {
+			Iterator itB = depositoComun.iterator();
+			while(itB.hasNext() && flotaTrasportes.get(matricula).espacioRemolqueDisponible()) {
+				Paquete p = (Paquete) itB.next();
+				flotaTrasportes.get(matricula).agregarPaquetes(p);
+				volumenTotal += p.obtenerVolumen();
+				itB.remove();
+			}
+		}
+		
+		return volumenTotal;
+		
+		
+		
 	}
 	// Inicia el viaje del transporte identificado por la
 	// matrícula pasada por parámetro.

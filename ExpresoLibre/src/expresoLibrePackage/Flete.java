@@ -51,20 +51,13 @@ public class Flete extends Trasporte{
 
 	@Override
 	public boolean consultarDisponibilidad() {
-		// TODO Auto-generated method stub
-		return false;
+		return disponible;
 	}
 
 	@Override
 	public int costoPorKM() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public void agregarPaquetes(Paquete paquete) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -88,11 +81,22 @@ public class Flete extends Trasporte{
 		}
 		
 	}
-
 	@Override
 	public boolean exiteDestino() {
 		return viaje!=null;
 	}
+
+	@Override
+	public boolean espacioRemolqueDisponible() {
+		return (cargaMax > 0 && capacidad > 0);
+	}
+
+	@Override
+	public void agregarPaquetes(Paquete paquete) {
+		depositoFlete.add(paquete);	
+	}
+
+
 
 
 }

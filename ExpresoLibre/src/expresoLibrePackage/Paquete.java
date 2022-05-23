@@ -17,7 +17,7 @@ public class Paquete {
 		return 0;
 	}
 	public double obtenerVolumen() {
-		return 0;
+		return volumen;
 	}
 	public String consultarDestino() {
 		return "vacion";

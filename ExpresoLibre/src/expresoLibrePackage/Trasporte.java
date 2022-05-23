@@ -27,8 +27,12 @@ public abstract class Trasporte {
 
 	protected abstract void agregarDestino(String destino, Integer integer);
 	
-	//se tiene que borrar
+	//no tiene que borrar
 	public abstract boolean exiteDestino();
+	
+	//cuando llega a 0 no tiene mas espacio para la carga
+	public abstract boolean espacioRemolqueDisponible();
+
 
 
 	
