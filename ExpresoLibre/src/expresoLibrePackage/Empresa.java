@@ -106,31 +106,40 @@ public class Empresa {
 		if(flotaTrasportes.get(matricula).consultarDisponibilidad() && flotaTrasportes.get(matricula).exiteDestino() && !flotaTrasportes.get(matricula).tieneRefrigeracion()) {
 			Iterator itB = depositoComun.iterator();
 			while(itB.hasNext() && flotaTrasportes.get(matricula).espacioRemolqueDisponible()) {
-				Paquete p = (Paquete) itB.next();
+				Paquete p = (Paquete) itB.next(); //comprobar que se pase el objeto completo! 
 				flotaTrasportes.get(matricula).agregarPaquetes(p);
 				volumenTotal += p.obtenerVolumen();
 				itB.remove();
 			}
 		}
 		
-		return volumenTotal;
-		
-		
-		
+		return volumenTotal;		
 	}
 	// Inicia el viaje del transporte identificado por la
 	// matrícula pasada por parámetro.
 	// En caso de no tener mercadería cargada o de ya estar en viaje
 	// se genera una excepción.
 	public void iniciarViaje(String matricula) {
+		if(flotaTrasportes.get(matricula).consultarDisponibilidad() && flotaTrasportes.get(matricula).remolqueCargado()) {
+			flotaTrasportes.get(matricula).cambiarEstadoDisponible(); //si es false = true. si es true = false
+		}else {
+			System.out.println("El trasporte no puede iniciar el viaje"); //implementar una correcta excepcion
+		}
 		
-	}
+	}//dos funciones en una???
+	
 	// Finaliza el viaje del transporte identificado por la 
 	// matrícula pasada por parámetro.
 	// El transporte vacía su carga y blanquea su destino, para poder
 	// ser vuelto a utilizar en otro viaje.
 	// Genera excepción si no está actualmente en viaje.
 	public void finalizarViaje(String matricula) {
+		if(!flotaTrasportes.get(matricula).consultarDisponibilidad()) { //si no esta disponible quiere decir que esta en viaje, pero se niega para que entre correctamente ak if
+			flotaTrasportes.get(matricula).vaciarCarga();				//vacia la carga
+			flotaTrasportes.get(matricula).cambiarEstadoDisponible(); //lo podria haber echo en una funcion?? preguntar
+		}else {
+			System.out.println("El trasporte no esta en viaje");
+		}
 		
 	}
 	// Obtiene el costo de viaje del transporte identificado por la

@@ -1,6 +1,7 @@
 package expresoLibrePackage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Trailer extends Trasporte {
 	private String matricula;
@@ -61,14 +62,20 @@ public class Trailer extends Trasporte {
 
 	@Override
 	public void vaciarCarga() {
-		// TODO Auto-generated method stub
+		Iterator itr = depositoTrailer.iterator();
+		while(itr.hasNext()) {
+			itr.remove();
+		}
 		
 	}
 
 	@Override
-	public void cambiarEstadoDisponible() {
-		// TODO Auto-generated method stub
-		
+	public void cambiarEstadoDisponible() { //si esta true pasa false y si esta false pasa true
+		if(disponible) {
+			this.disponible = false;
+		}else {
+			this.disponible = true;
+		}
 	}
 
 	@Override
@@ -96,6 +103,11 @@ public class Trailer extends Trasporte {
 		this.cargaMax -= paquete.obtenerPeso();
 		this.capacidad -= paquete.obtenerVolumen(); //leer bien la especificacion para no restar valores incorrectos
 		
+	}
+
+	@Override
+	public boolean remolqueCargado() {
+		return depositoTrailer.size() > 0; 
 	}
 
 }

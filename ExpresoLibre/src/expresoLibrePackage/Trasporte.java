@@ -32,6 +32,11 @@ public abstract class Trasporte {
 	
 	//cuando llega a 0 no tiene mas espacio para la carga
 	public abstract boolean espacioRemolqueDisponible();
+	
+	//tiene paquetes cargados 
+	public abstract boolean remolqueCargado();
+	
+	//cambiar estado no disponible
 
 
 

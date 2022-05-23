@@ -68,7 +68,11 @@ public class Flete extends Trasporte{
 
 	@Override
 	public void cambiarEstadoDisponible() {
-		// TODO Auto-generated method stub
+		if(disponible) {
+			this.disponible = false;
+		}else {
+			this.disponible = true;
+		}
 		
 	}
 
@@ -94,6 +98,13 @@ public class Flete extends Trasporte{
 	@Override
 	public void agregarPaquetes(Paquete paquete) {
 		depositoFlete.add(paquete);	
+		this.cargaMax -= paquete.obtenerPeso();
+		this.capacidad -= paquete.obtenerVolumen();
+	}
+
+	@Override
+	public boolean remolqueCargado() {
+		return depositoFlete.size() > 0;
 	}
 
 

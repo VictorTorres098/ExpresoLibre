@@ -71,7 +71,11 @@ public class MegaTrailer extends Trasporte {
 
 	@Override
 	public void cambiarEstadoDisponible() {
-		// TODO Auto-generated method stub
+		if(disponible) {
+			this.disponible = false;
+		}else {
+			this.disponible = true;
+		}
 		
 	}
 
@@ -98,6 +102,13 @@ public class MegaTrailer extends Trasporte {
 	@Override
 	public void agregarPaquetes(Paquete paquete) {
 		despositoMegaTrailer.add(paquete);
+		this.cargaMax -= paquete.obtenerPeso();
+		this.capacidad -= paquete.obtenerVolumen();
+	}
+
+	@Override
+	public boolean remolqueCargado() {
+		return despositoMegaTrailer.size() > 0;
 	}
 
 
