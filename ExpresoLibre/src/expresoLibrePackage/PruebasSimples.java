@@ -43,10 +43,11 @@ public class PruebasSimples {
 		
 		//agrego el destino
 		test1.agregarDestino("buenos aires", 30);
+		test1.agregarDestino("codoba", 100);
 		
 		//asigno el destino a los dos trasportes
 		test1.asignarDestino("1234", "buenos aires");
-		test1.asignarDestino("4321", "buenos aires");
+		test1.asignarDestino("4321", "codoba");
 		
 		System.out.print(test1.obtenerTransporteIgual("1234"));
 		
