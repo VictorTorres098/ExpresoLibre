@@ -154,7 +154,7 @@ public class Empresa {
 	public String obtenerTransporteIgual(String matricula) {
 		String coicidencia = null;
 		for(String key : flotaTrasportes.keySet()) {
-			if(flotaTrasportes.get(matricula).equals(flotaTrasportes.get(key))) {
+			if(flotaTrasportes.get(matricula).equals(flotaTrasportes.get(key))) { // los dos trasportes tienen que tener un destino asignado!
 				coicidencia = flotaTrasportes.get(key).matricula();
 			}
 		}
