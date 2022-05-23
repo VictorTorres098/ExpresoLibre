@@ -10,6 +10,8 @@ public class Empresa {
 	private ArrayList <Paquete> depositoComun;
 	private int capacidadDeCadaDeposito;  //se cambio de nombre por el test para mas adelante // no tiene que pasar de esa capacidad
 	private HashMap <String, Trasporte> flotaTrasportes;
+	//implementacios viajes solo destino y y km
+	private HashMap <String, Integer> viajes;
 	
 	public Empresa (String cuit, String nombre, int capacidadDeCadaDeposito) {
 		this.cuit = cuit;
@@ -18,6 +20,8 @@ public class Empresa {
 		flotaTrasportes = new HashMap <String, Trasporte>();
 		depositoRefrigerado = new ArrayList<>();
 		depositoComun = new ArrayList<>();
+		
+		viajes = new HashMap<String, Integer>();
 	}
 	//INTERFAZ OBLIGATORIA//
 	
@@ -25,7 +29,11 @@ public class Empresa {
 	//Es requisito previo, para poder asignar un destino a un transporte.
 	//Si ya existe el destino se debe generar una excepción.
 	public void agregarDestino(String destino, int km) {
-		
+		if(!existeDestino(destino)) {
+			viajes.put(destino, km);
+		}else {
+			System.out.print("Ya existe el destino"); // se debe implementar correctamente la excepcion!!! 
+		}
 	}
 	
 	//Los siguientes métodos agregan los tres tipos de transportes a la
@@ -50,7 +58,9 @@ public class Empresa {
 	//debe haber sido agregado previamente, con el método agregarDestino).
 	//Si el destino no está registrado, se debe generar una excepción.
 	public void asignarDestino(String matricula, String destino) {
-		
+		if(existeDestino(destino) && exiteMatriculaEnFlota(matricula)) {
+			flotaTrasportes.get(matricula).agregarDestino(destino ,viajes.get(destino));
+		}
 	}
 	//Se incorpora un paquete a algún depósito de la empresa.
 	// Devuelve verdadero si se pudo incorporar, es decir,
@@ -110,11 +120,17 @@ public class Empresa {
 		return flotaTrasportes.containsKey(matricula);
 	}
 	//comprueba que no pase de limite los depositos!
-	public boolean depositoDisponibleRefrigerado() {
+	private boolean depositoDisponibleRefrigerado() {
 		return depositoRefrigerado.size() <= capacidadDeCadaDeposito;
 	}
 	private boolean depositoDisponibleComun() {
 		return depositoComun.size() <= capacidadDeCadaDeposito;
 	}
-	
+	private boolean existeDestino(String destino) {
+		return viajes.containsKey(destino);
+	}
+	//consulta destino dada un matricula
+	public boolean cargoExistosamenteDestino(String matricula){
+		return flotaTrasportes.get(matricula).exiteDestino();
+	}
 }

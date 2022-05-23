@@ -18,13 +18,17 @@ public abstract class Trasporte {
 	
 	public abstract int costoPorKM ();
 	
-	public abstract void agregarDestino (Viaje destino);
 	
 	public abstract void agregarPaquetes (Paquete paquete);
 	
 	public abstract void vaciarCarga ();
 	
 	public abstract void cambiarEstadoDisponible ();
+
+	protected abstract void agregarDestino(String destino, Integer integer);
+	
+	//se tiene que borrar
+	public abstract boolean exiteDestino();
 
 
 	

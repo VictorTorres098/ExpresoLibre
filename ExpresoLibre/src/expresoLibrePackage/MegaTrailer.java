@@ -64,11 +64,7 @@ public class MegaTrailer extends Trasporte {
 		return 0;
 	}
 
-	@Override
-	public void agregarDestino(Viaje destino) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public void agregarPaquetes(Paquete paquete) {
@@ -86,6 +82,21 @@ public class MegaTrailer extends Trasporte {
 	public void cambiarEstadoDisponible() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected void agregarDestino(String destino, Integer km) {
+		if(viaje==null) {
+			this.viaje = new Viaje(destino, km);
+		}else {
+			System.out.print("Ya exite un destino para este trasporte"); //implementar excepcion
+		}
+		
+	}
+
+	@Override
+	public boolean exiteDestino() {
+		return viaje!=null;
 	}
 
 }

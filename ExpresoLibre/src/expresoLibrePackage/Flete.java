@@ -62,12 +62,6 @@ public class Flete extends Trasporte{
 	}
 
 	@Override
-	public void agregarDestino(Viaje destino) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void agregarPaquetes(Paquete paquete) {
 		// TODO Auto-generated method stub
 		
@@ -84,5 +78,21 @@ public class Flete extends Trasporte{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void agregarDestino(String destino, Integer km) {
+		if(viaje==null) {
+			this.viaje = new Viaje(destino, km);
+		}else {
+			System.out.print("Ya exite un destino para este trasporte"); //implementar excepcion
+		}
+		
+	}
+
+	@Override
+	public boolean exiteDestino() {
+		return viaje!=null;
+	}
+
 
 }
