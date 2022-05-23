@@ -47,9 +47,14 @@ public class PruebasSimples {
 		
 		//asigno el destino a los dos trasportes
 		test1.asignarDestino("1234", "buenos aires");
-		test1.asignarDestino("4321", "codoba");
+		test1.asignarDestino("4321", "buenos aires");
 		
 		System.out.print(test1.obtenerTransporteIgual("1234"));
+		
+		
+		///FALTAN IREPS Y LIMITADORES DE ALGUNAS FUNCIONES!!!!!!!!!!!!!!!!!!
+		
+		
 		
 		
 		
