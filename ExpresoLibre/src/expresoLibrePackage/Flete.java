@@ -1,6 +1,7 @@
 package expresoLibrePackage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Flete extends Trasporte{
 	
@@ -14,6 +15,7 @@ public class Flete extends Trasporte{
 	private ArrayList <Paquete> depositoFlete;
 	private boolean disponible;
 	private String tipo = "Flete";
+	private double destinoMax = 500;
 	
 	public Flete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante) {		//falta variables en el contructor
 		this.matricula = matricula;
@@ -28,25 +30,28 @@ public class Flete extends Trasporte{
 
 	@Override
 	public boolean tieneRefrigeracion() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public int obtenerCargaMaxima() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double obtenerCargaMaxima() {
+		return this.cargaMax;
 	}
 
 	@Override
-	public int obtenerVolumen() {
-		return depositoFlete.size();
+	public double obtenerVolumen() {
+		double volumen = 0;
+		Iterator itr = depositoFlete.iterator();
+		while(itr.hasNext()) {
+			Paquete p = (Paquete) itr.next();
+			volumen += p.obtenerVolumen();
+		}
+		return volumen;
 	}
 
 	@Override
-	public int distanciaMáxima() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double distanciaMáxima() {
+		return this.destinoMax;
 	}
 
 	@Override
@@ -55,15 +60,16 @@ public class Flete extends Trasporte{
 	}
 
 	@Override
-	public int costoPorKM() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double costoPorKM() {
+		return costoKm * this.viaje.consultarDistancia(); //se podria hacer en obtener costo
 	}
 
 	@Override
 	public void vaciarCarga() {
-		// TODO Auto-generated method stub
-		
+		Iterator itr = depositoFlete.iterator();
+		while(itr.hasNext()) {
+			itr.remove();
+		}
 	}
 
 	@Override
@@ -81,7 +87,7 @@ public class Flete extends Trasporte{
 		if(viaje==null) {
 			this.viaje = new Viaje(destino, km);
 		}else {
-			System.out.print("Ya exite un destino para este trasporte"); //implementar excepcion
+			throw new RuntimeException("Ya exite un destino para este trasporte");
 		}
 		
 	}
@@ -129,6 +135,28 @@ public class Flete extends Trasporte{
 	@Override
 	public String matricula() {
 		return this.matricula;
+	}
+
+	@Override
+	public double devolverCosto() {
+		return costoPorKM() + (this.cantAcompaniantes * this.costoPorAcompaniante);
+	}
+
+	@Override
+	public boolean consultarSiEstaDeViaje() {
+		return this.disponible;
+	}
+
+	@Override
+	public void iniciarViaje() {
+		this.disponible = false;
+		
+	}
+
+	@Override
+	public void finalizarViaje() {
+		this.disponible = true;
+		
 	}
 
 

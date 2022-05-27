@@ -8,15 +8,15 @@ public abstract class Trasporte {
 	
 	public abstract boolean tieneRefrigeracion();
 	
-	public abstract int obtenerCargaMaxima();
+	public abstract double obtenerCargaMaxima();
 	
-	public abstract int obtenerVolumen();
+	public abstract double obtenerVolumen();
 	
-	public abstract int distanciaMáxima ();
+	public abstract double distanciaMáxima ();
 	
 	public abstract boolean consultarDisponibilidad ();
 	
-	public abstract int costoPorKM ();
+	public abstract double costoPorKM ();
 	
 	
 	public abstract void agregarPaquetes (Paquete paquete);
@@ -44,7 +44,18 @@ public abstract class Trasporte {
 	
 	//devuelve la matricula
 	public abstract String matricula();
-
+	
+	//devuelva es costo
+	public abstract double devolverCosto();
+	
+	//estaEnViaje
+	public abstract boolean consultarSiEstaDeViaje();
+	
+	//cambiar a esta de viaje
+	public abstract void iniciarViaje();
+	
+	//cambiar a finalizar viaje
+	public abstract void finalizarViaje();
 
 
 	

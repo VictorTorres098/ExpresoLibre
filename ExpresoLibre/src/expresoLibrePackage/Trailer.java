@@ -14,6 +14,8 @@ public class Trailer extends Trasporte {
 	private ArrayList<Paquete> depositoTrailer;
 	private boolean disponible;
 	private String tipo = "Trailer";
+	private double distanciaMax = 500;
+	private boolean estaEnViaje = false;
 	
 	public Trailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKM, double segCarga) { //faltan las variables
 		this.matricula = matricula;
@@ -33,21 +35,24 @@ public class Trailer extends Trasporte {
 	}
 
 	@Override
-	public int obtenerCargaMaxima() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double obtenerCargaMaxima() {
+		return this.cargaMax;
 	}
 
 	@Override
-	public int obtenerVolumen() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double obtenerVolumen() {
+		double volumen = 0;
+		Iterator itr = depositoTrailer.iterator();
+		while(itr.hasNext()) {
+			Paquete p = (Paquete) itr.next();
+			volumen += p.obtenerVolumen();
+		}
+		return volumen;
 	}
 
 	@Override
-	public int distanciaMáxima() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double distanciaMáxima() {
+		return this.distanciaMax;
 	}
 
 	@Override
@@ -56,9 +61,8 @@ public class Trailer extends Trasporte {
 	}
 
 	@Override
-	public int costoPorKM() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double costoPorKM() {
+		return this.viaje.consultarDistancia() * costoKM ;
 	}
 
 	@Override
@@ -84,7 +88,7 @@ public class Trailer extends Trasporte {
 		if(viaje==null) {
 			this.viaje = new Viaje(destino, km);
 		}else {
-			System.out.print("Ya exite un destino para este trasporte"); //implementar excepcion
+			throw new RuntimeException("Ya exite un destino para este trasporte"); 
 		}
 		
 	}
@@ -102,8 +106,7 @@ public class Trailer extends Trasporte {
 	public void agregarPaquetes(Paquete paquete) {
 		depositoTrailer.add(paquete);
 		this.cargaMax -= paquete.obtenerPeso();
-		this.capacidad -= paquete.obtenerVolumen(); //leer bien la especificacion para no restar valores incorrectos
-		
+		this.capacidad -= paquete.obtenerVolumen(); //leer bien la especificacion para no restar valores incorrectos	
 	}
 
 	@Override
@@ -133,6 +136,28 @@ public class Trailer extends Trasporte {
 	@Override
 	public String matricula() {
 		return this.matricula;
+	}
+
+	@Override
+	public double devolverCosto() {
+		return costoPorKM() + this.segCarga;
+	}
+
+	@Override
+	public boolean consultarSiEstaDeViaje() {
+		return this.disponible;
+	}
+
+	@Override
+	public void iniciarViaje() {
+		this.disponible = false;
+		
+	}
+
+	@Override
+	public void finalizarViaje() {
+		this.disponible = true;
+		
 	}
 
 }

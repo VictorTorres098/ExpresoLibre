@@ -14,13 +14,13 @@ public class Paquete {
 	}
 	
 	public double obtenerPeso() {
-		return 0;
+		return this.peso;
 	}
 	public double obtenerVolumen() {
-		return volumen;
+		return this.volumen;
 	}
 	public String consultarDestino() {
-		return "vacion";
+		return this.destino;
 	}
 	public boolean requiereRefrigeracion() {
 		return necesitaRefrigeracion;

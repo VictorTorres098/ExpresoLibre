@@ -1,6 +1,7 @@
 package expresoLibrePackage;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class MegaTrailer extends Trasporte {
 	private String matricula;
@@ -15,6 +16,7 @@ public class MegaTrailer extends Trasporte {
 	private ArrayList<Paquete> despositoMegaTrailer;
 	private boolean disponible;
 	private String tipo = "MegaTrailer";
+	private double distanciaMax = 500; //solamente los mayores a 500km
 	
 	public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) { //faltan variables
 		this.matricula = matricula;
@@ -31,41 +33,46 @@ public class MegaTrailer extends Trasporte {
 
 	@Override
 	public boolean tieneRefrigeracion() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tieneRefrigeracion;
 	}
 
 	@Override
-	public int obtenerCargaMaxima() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double obtenerCargaMaxima() {
+		return this.cargaMax;
 	}
 
 	@Override
-	public int obtenerVolumen() {
-		return despositoMegaTrailer.size();
+	public double obtenerVolumen() {
+		double volumen = 0;
+		Iterator itr = despositoMegaTrailer.iterator();
+		while(itr.hasNext()) {
+			Paquete p = (Paquete) itr.next();
+			volumen += p.obtenerVolumen();
+		}
+		return volumen;
 	}
 
 	@Override
-	public int distanciaMáxima() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double distanciaMáxima() {
+		return 10000000; //cambiar por un mejor implementacion
 	}
 
 	@Override
 	public boolean consultarDisponibilidad() {
-		return disponible;
+		return this.disponible;
 	}
 
 	@Override
-	public int costoPorKM() {
-		// TODO Auto-generated method stub
-		return 0;
+	public double costoPorKM() {
+		return costoKm * this.viaje.consultarDistancia(); //no deberia hacer este calculo aca
 	}
 
 	@Override
 	public void vaciarCarga() {
-		// TODO Auto-generated method stub
+		Iterator itr = despositoMegaTrailer.iterator();
+		while(itr.hasNext()) {
+			itr.remove();
+		}
 		
 	}
 
@@ -84,7 +91,7 @@ public class MegaTrailer extends Trasporte {
 		if(viaje==null) {
 			this.viaje = new Viaje(destino, km);
 		}else {
-			System.out.print("Ya exite un destino para este trasporte"); //implementar excepcion
+			throw new RuntimeException("Ya exite un destino para este trasporte");
 		}
 		
 	}
@@ -133,6 +140,28 @@ public class MegaTrailer extends Trasporte {
 	@Override
 	public String matricula() {
 		return this.matricula;
+	}
+
+	@Override
+	public double devolverCosto() {
+		return costoPorKM() + this.segCarga + this.costoFijo + this.costoComida;
+	}
+
+	@Override
+	public boolean consultarSiEstaDeViaje() {
+		return this.disponible;
+	}
+
+	@Override
+	public void iniciarViaje() {
+		this.disponible = false;
+		
+	}
+
+	@Override
+	public void finalizarViaje() {
+		this.disponible = true;
+		
 	}
 
 
