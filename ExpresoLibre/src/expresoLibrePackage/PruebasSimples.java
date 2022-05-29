@@ -73,6 +73,8 @@ public class PruebasSimples {
 		System.out.println(test1.cargarTransporte("12345"));
 		
 		System.out.println(test1.obtenerCostoViaje("12345"));
+		System.out.println(test1.obtenerCostoViaje("12345"));
+	
 		
 		
 		
