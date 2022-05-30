@@ -16,6 +16,7 @@ public class Flete extends Trasporte{
 	private boolean disponible;
 	private String tipo = "Flete";
 	private double destinoMax = 500;
+	private boolean estaEnViaje;
 	
 	public Flete(String matricula, double cargaMax, double capacidad, double costoKm, int cantAcompaniantes, double costoPorAcompaniante) {		//falta variables en el contructor
 		this.matricula = matricula;
@@ -26,6 +27,7 @@ public class Flete extends Trasporte{
 		this.costoPorAcompaniante = costoPorAcompaniante;
 		depositoFlete = new ArrayList <Paquete>();
 		disponible = true;
+		estaEnViaje = false; 
 	}
 
 	@Override
@@ -66,10 +68,7 @@ public class Flete extends Trasporte{
 
 	@Override
 	public void vaciarCarga() {
-		Iterator itr = depositoFlete.iterator();
-		while(itr.hasNext()) {
-			itr.remove();
-		}
+		depositoFlete.clear();
 	}
 
 	@Override
@@ -144,18 +143,22 @@ public class Flete extends Trasporte{
 
 	@Override
 	public boolean consultarSiEstaDeViaje() {
-		return this.disponible;
+		return this.estaEnViaje;
 	}
 
 	@Override
 	public void iniciarViaje() {
-		this.disponible = false;
+		estaEnViaje = true;
+		disponible = false;
 		
 	}
 
 	@Override
 	public void finalizarViaje() {
+		estaEnViaje = false;
 		this.disponible = true;
+		vaciarCarga();
+		this.viaje = null;
 		
 	}
 

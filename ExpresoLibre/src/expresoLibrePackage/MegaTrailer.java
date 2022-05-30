@@ -17,6 +17,7 @@ public class MegaTrailer extends Trasporte {
 	private boolean disponible;
 	private String tipo = "MegaTrailer";
 	private double distanciaMax = 500; //solamente los mayores a 500km
+	private boolean estaEnViaje;
 	
 	public MegaTrailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKm, double segCarga, double costoFijo, double costoComida) { //faltan variables
 		this.matricula = matricula;
@@ -29,6 +30,7 @@ public class MegaTrailer extends Trasporte {
 		this.costoComida = costoComida;
 		despositoMegaTrailer = new ArrayList<Paquete>();
 		disponible = true;
+		estaEnViaje = false; 
 	}
 
 	@Override
@@ -69,11 +71,8 @@ public class MegaTrailer extends Trasporte {
 
 	@Override
 	public void vaciarCarga() {
-		Iterator itr = despositoMegaTrailer.iterator();
-		while(itr.hasNext()) {
-			itr.remove();
-		}
 		
+		despositoMegaTrailer.clear();
 	}
 
 	@Override
@@ -149,19 +148,21 @@ public class MegaTrailer extends Trasporte {
 
 	@Override
 	public boolean consultarSiEstaDeViaje() {
-		return this.disponible;
+		return this.estaEnViaje;
 	}
 
 	@Override
 	public void iniciarViaje() {
-		this.disponible = false;
-		
+		estaEnViaje = true;
+		disponible = false;
 	}
 
 	@Override
 	public void finalizarViaje() {
+		estaEnViaje = false;
 		this.disponible = true;
-		
+		vaciarCarga();
+		this.viaje = null;
 	}
 
 

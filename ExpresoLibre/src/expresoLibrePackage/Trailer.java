@@ -15,7 +15,7 @@ public class Trailer extends Trasporte {
 	private boolean disponible;
 	private String tipo = "Trailer";
 	private double distanciaMax = 500;
-	private boolean estaEnViaje = false;
+	private boolean estaEnViaje;
 	
 	public Trailer(String matricula, double cargaMax, double capacidad, boolean tieneRefrigeracion, double costoKM, double segCarga) { //faltan las variables
 		this.matricula = matricula;
@@ -27,6 +27,7 @@ public class Trailer extends Trasporte {
 		this.viaje = null; //inicia sin ningun viaje
 		depositoTrailer = new ArrayList<Paquete>();
 		disponible = true; // comienza estando disponible ya que no tiene ningun viaje
+		estaEnViaje = false; 
 	}
 
 	@Override
@@ -67,10 +68,7 @@ public class Trailer extends Trasporte {
 
 	@Override
 	public void vaciarCarga() {
-		Iterator itr = depositoTrailer.iterator();
-		while(itr.hasNext()) {
-			itr.remove();
-		}
+		depositoTrailer.clear();
 		
 	}
 
@@ -145,19 +143,21 @@ public class Trailer extends Trasporte {
 
 	@Override
 	public boolean consultarSiEstaDeViaje() {
-		return this.disponible;
+		return this.estaEnViaje;
 	}
 
 	@Override
 	public void iniciarViaje() {
-		this.disponible = false;
-		
+		estaEnViaje = true;
+		disponible = false;
 	}
 
 	@Override
 	public void finalizarViaje() {
+		estaEnViaje = false;
 		this.disponible = true;
-		
+		vaciarCarga();
+		this.viaje = null;
 	}
 
 }
