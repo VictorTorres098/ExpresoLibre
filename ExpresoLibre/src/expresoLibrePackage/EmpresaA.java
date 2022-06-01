@@ -62,10 +62,11 @@ public class EmpresaA {
 		//debe haber sido agregado previamente, con el método agregarDestino).
 		//Si el destino no está registrado, se debe generar una excepción.
 		public void asignarDestino(String matricula, String destino) {
+			Trasporte t = flotaTrasportes.get(matricula);
 			if(existeDestino(destino) && exiteMatriculaEnFlota(matricula)) {
-				flotaTrasportes.get(matricula).agregarDestino(destino ,viajes.get(destino));
+				t.agregarDestino(destino ,viajes.get(destino));
 			}else {
-				throw new RuntimeException("No estÃ¡ registrado el transporte");
+				throw new RuntimeException("El destino o el trasporte no estan registrados!");
 			}
 		}
 		//Se incorpora un paquete a algún depósito de la empresa.
@@ -100,33 +101,30 @@ public class EmpresaA {
 		// al transporte.
 		public double cargarTransporte(String matricula) {
 				
-			//para los depositos refrigerados
+			Trasporte t = flotaTrasportes.get(matricula);
 			
-			if(flotaTrasportes.get(matricula).consultarDisponibilidad() && flotaTrasportes.get(matricula).exiteDestino() && flotaTrasportes.get(matricula).tieneRefrigeracion()) {
+			//para los depositos refrigerados
+			if(t.consultarDisponibilidad() && t.exiteDestino() && t.tieneRefrigeracion()) {
 				Iterator it = depositoRefrigerado.iterator();
-				while(it.hasNext() && flotaTrasportes.get(matricula).espacioRemolqueDisponible()) { //que el 
+				while(it.hasNext() && t.espacioRemolqueDisponible()) {  
 					Paquete p = (Paquete) it.next(); 					//necesito castearlo para acceder a los metodos
-					flotaTrasportes.get(matricula).agregarPaquetes(p);  //agrego la "remolque"
-					//volumenTotal += p.obtenerVolumen(); 				//sumo cada volumen del cada paquete
+					t.agregarPaquetes(p);  								//agrego la "remolque"
 					volumneActualRefrigerado -= p.obtenerVolumen();     //descuento el volumen del depo
-					it.remove(); 										//remove??? lo tiene que remover
+					it.remove(); 										
 				}
 			}
 			
 			//para los que no necesitan refrigeracion (deposito comun)
-			
-			if(flotaTrasportes.get(matricula).consultarDisponibilidad() && flotaTrasportes.get(matricula).exiteDestino() && !flotaTrasportes.get(matricula).tieneRefrigeracion()) {
+			if(t.consultarDisponibilidad() && t.exiteDestino() && !t.tieneRefrigeracion()) {
 				Iterator itB = depositoComun.iterator();
-				while(itB.hasNext() && flotaTrasportes.get(matricula).espacioRemolqueDisponible()) {
-					Paquete p = (Paquete) itB.next(); //comprobar que se pase el objeto completo! 
-					flotaTrasportes.get(matricula).agregarPaquetes(p);
-					//volumenTotal += p.obtenerVolumen();
+				while(itB.hasNext() && t.espacioRemolqueDisponible()) {
+					Paquete p = (Paquete) itB.next(); 					//comprobar que se pase el objeto completo! 
+					t.agregarPaquetes(p);
 					volumneActualcomun -= p.obtenerVolumen();
 					itB.remove();
 				}
 			}
-			//new commit comp
-			return flotaTrasportes.get(matricula).obtenerVolumen();		
+			return t.obtenerVolumen();		
 		}
 		// Inicia el viaje del transporte identificado por la
 		// matrícula pasada por parámetro.
